@@ -1,0 +1,16 @@
+[v-cloak] {
+  display: none;
+}
+
+.kj-progress-bar {
+	height: 2rem;
+	font-size: 1rem;
+}
+
+.kj-progress-bar .progress-bar{
+    background-color: #111111;
+}
+
+.bg-dark-2 {
+	background-color: #505050!important;
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>KJ CLICKER 3</title>
+
+    <link rel="shortcut icon" href="{{asset('img/favicon-ver2.ico')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="./open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/app.css">
+</head>
+
+<body>
+	<div id="app" class="container" v-cloak>
+	
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+		  <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span class="oi oi-home"></span> ホーム</a></li>
+		  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#research" role="tab"><span class="oi oi-beaker"></span> 研究</a></li>
+		  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#setting" role="tab"><span class="oi oi-cog"></span> 設定</a></li>
+		</ul>
+		<div class="tab-content">
+				<div class="tab-pane active" id="home" role="tabpanel">
+				<div class="row">
+					<div class="col-12">
+						<br>
+						<span class="oi oi-dollar"></span> お金： {{money}} <br><br>
+
+						<span class="oi oi-fire"></span> 石炭 {{coal_object.volume}} / {{coal_object.volume_max}} ( {{coal_volume_rate}}% )
+						<div class="progress kj-progress-bar">
+							<div class="progress-bar progress-bar-striped" role="progressbar" :style="{width: coal_volume_rate+'%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<br>
+						
+						<span class="oi oi-bolt"></span> 電気 {{energy_object.volume}} / {{energy_object.volume_max}} ( {{energy_volume_rate}}% )
+						<div class="progress kj-progress-bar">
+							<div class="progress-bar progress-bar-striped bg-warning" :style="{width: energy_volume_rate+'%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<br>
+
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm">
+						<div class="card text-white bg-dark-2">
+							<div class="card-header">
+								<span class="oi oi-fire"></span> 石炭
+							</div>
+							<div class="card-body">
+								<button class="btn btn-secondary" v-on:click="coal_object.volume += coal_object.volume < coal_object.volume_max ? 1 : 0"> 石炭集め </button><br><br>
+								<button class="btn btn-secondary"> 炭鉱夫を雇う </button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_machine(1)" v-bind:disabled="money == 0"> 採掘機購入 </button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_volume_max(1)" v-bind:disabled="money == 0"> サイロ購入 </button><br><br>
+								<button class="btn btn-secondary" v-on:click="sell(1)" v-bind:disabled="coal_object.volume == 0"> 石炭を売る </button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm">
+						<div class="card text-white bg-warning">
+							<div class="card-header">
+								<span class="oi oi-bolt"></span> 電気
+							</div>
+							<div class="card-body">
+								<button class="btn btn-secondary" v-on:click="energy_object.volume += energy_object.volume < energy_object.volume_max ? 1 : 0; coal_object.volume-=10" v-bind:disabled="coal_object.volume < 10 || energy_object.volume == energy_object.volume_max"> 自家発電ボーイppsk </button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_machine(2)" v-bind:disabled="money == 0"> 発電機購入 </button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_volume_max(2)" v-bind:disabled="money == 0"> 蓄電器購入 </button><br><br>
+								<button class="btn btn-secondary" v-on:click="sell(2)" v-bind:disabled="energy_object.volume == 0"> 電気を売る </button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm">
+						<div class="card text-white bg-danger">
+							<div class="card-header">
+								<span class="oi oi-warning"></span> 工場
+							</div>
+							<div class="card-body">
+								<button class="btn btn-secondary" > 工場を購入 </button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="research" role="tabpanel">
+				研究しないで
+			</div>
+
+			<div class="tab-pane" id="setting" role="tabpanel">
+				設定しないで
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+	<script src="./js/app.js"></script>
+
+</body>
+
+</html>
