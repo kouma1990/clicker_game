@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="./open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
     <link rel="stylesheet" href="./css/app.css">
 </head>
 
@@ -21,6 +22,7 @@
 		<ul class="nav nav-tabs" role="tablist">
 		  <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span class="oi oi-home"></span> ホーム</a></li>
 		  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#research" role="tab"><span class="oi oi-beaker"></span> 研究</a></li>
+		  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#battle" role="tab"><i class="fab fa-fort-awesome-alt"></i> 戦闘</a></li>
 		  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#setting" role="tab"><span class="oi oi-cog"></span> 設定</a></li>
 		</ul>
 		<div class="tab-content">
@@ -125,7 +127,7 @@
 									   <span class="red">- {{energy_machine_use_coal}} [<span class="oi oi-fire"></span>]</span><br>
 								</div>
 								<div v-show="factory_object.researched">
-								工場({{factory_object.machine.count}}): <span class="blue">+ {{factory_object.machine.count*1000}} [<span class="oi oi-dollar"></span>]</span>, 
+								工場({{factory_object.machine.count}}): <span class="blue">+ {{factory_object.machine.out_product * factory_object.machine.count}} [<i class="fas fa-cubes"></i>]</span>, 
 									   <span class="red">- {{factory_object.machine.count*100}} [<span class="oi oi-bolt"></span>]</span><br>
 								</div>
 							</div>
@@ -134,7 +136,10 @@
 				</div>
 			</div>
 			
-			<!-- ****************************************************************************-->
+
+			<!-- ******************************************************************************************************************************************************************-->
+			<!-- ******************************************************************************************************************************************************************-->
+			<!-- ******************************************************************************************************************************************************************-->
 			<div class="tab-pane" id="research" role="tabpanel">
 				<br>
 				<h4><span class="oi oi-dollar"></span> {{money | numberDelimiter}} </h4><br>
@@ -145,16 +150,56 @@
 				</div>
 
 				<div v-show="!energy_object.researched">
-				<button class="btn btn-info" v-on:click="research(1)" v-bind:disabled="money < research_energy_cost"> 電気を研究 <span class="oi oi-dollar">{{research_energy_cost | numberDelimiter}} </button>
-				<br><br>
+					<button class="btn btn-info" v-on:click="research(1)" v-bind:disabled="money < research_energy_cost"> 電気を研究 <span class="oi oi-dollar">{{research_energy_cost | numberDelimiter}} </button>
+					<br><br>
+				</div>
+
+				<div v-show="energy_object.researched && energy_object.machine.speed >= 100">
+					<button class="btn btn-info" v-on:click="upgrade_machine_speed(2)" v-bind:disabled="money < energy_object.machine.upgrade_speed_cost"> 発電機アップグレード <span class="oi oi-dollar">{{energy_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
+					<br><br>
 				</div>
 				
-				<div v-show="!factory_object.researched">
+				<div v-show="energy_object.researched && !factory_object.researched">
 				<button class="btn btn-info" v-on:click="research(2)" v-bind:disabled="money < research_factory_cost"> 工場を研究 <span class="oi oi-dollar">{{research_factory_cost | numberDelimiter}} </button>
+				</div>
+
+				<div v-show="factory_object.researched && factory_object.machine.speed >= 100">
+					<button class="btn btn-info" v-on:click="upgrade_machine_speed(3)" v-bind:disabled="money < factory_object.machine.upgrade_speed_cost"> 工場アップグレード <span class="oi oi-dollar">{{factory_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
+					<br><br>
 				</div>
 			</div>
 
-			<!-- ****************************************************************************-->
+			<!-- ******************************************************************************************************************************************************************-->
+			<!-- ******************************************************************************************************************************************************************-->
+			<!-- ******************************************************************************************************************************************************************-->
+			<div class="tab-pane" id="battle" role="tabpanel">
+				<br>
+				<h4><span class="oi oi-dollar"></span> {{money | numberDelimiter}} </h4><br>
+
+				LEVEL{{battle.enemy_level}}  HP {{battle.health}} / {{battle.health_max}} ( {{health_volume_rate}}% )
+				<div class="progress kj-progress-bar">
+					<div class="progress-bar bg-danger" role="progressbar" :style="{width: health_volume_rate+'%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm">
+						<div class="card">
+							<div class="card-header">
+								<span class="oi oi-align-left"></span> ステータス
+							</div>
+							<div class="card-body">
+								<button class="btn btn-info" v-on:click="buy_weapon()" v-bind:disabled="money < battle.cost"> 武器アップグレード <span class="oi oi-dollar">{{battle.cost | numberDelimiter}}</button><br>
+								攻撃力: {{battle.attack}}<br>
+								攻撃スピード: 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ******************************************************************************************************************************************************************-->
+			<!-- ******************************************************************************************************************************************************************-->
+			<!-- ******************************************************************************************************************************************************************-->
 			<div class="tab-pane" id="setting" role="tabpanel">
 				設定しないで
 			</div>
