@@ -96,7 +96,7 @@ var AppClass = new Vue({
         },
         upgrade_machine_speed: function(index) {
             var object = this.get_object(index)
-            object.machine.speed /= 2
+            object.machine.speed = Math.ceil(object.machine.speed * 0.8)
             this.money -= object.machine.upgrade_speed_cost
             object.machine.upgrade_speed_cost *= 10
             
@@ -212,9 +212,6 @@ AppClass.energy_object.machine.interval_id = setInterval(AppClass.energy_object.
 AppClass.factory_object.machine.interval_id = setInterval(AppClass.factory_object.machine.run_machine_function, AppClass.factory_object.machine.speed)
 
 
-
-
-
 // 戦闘の処理
 AppClass.battle.run_battle_function = function () {
     var battle_object = AppClass.battle
@@ -222,7 +219,13 @@ AppClass.battle.run_battle_function = function () {
     battle_object.health -= battle_object.attack
     if(battle_object.health <= 0) {
         battle_object.enemy_level += 1
-        battle_object.health_max =  Math.round(battle_object.health_max*1.3)
+        if(battle_object.enemy_level % 10 == 0) {
+            battle_object.health_max =  Math.round(battle_object.health_max*3.3)
+        } else if(battle_object.enemy_level % 100 == 0) {
+            battle_object.health_max =  Math.round(battle_object.health_max*33.3)
+        } else {
+            battle_object.health_max =  Math.round(battle_object.health_max*1.3)
+        }
         battle_object.health = battle_object.health_max
     }
 }

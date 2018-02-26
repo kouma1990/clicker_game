@@ -62,8 +62,8 @@
 							</div>
 							<div class="card-body">
 								<button class="btn btn-secondary" v-on:click="coal_object.volume = (coal_object.volume+coal_click_power > coal_object.volume_max) ? coal_object.volume_max : (coal_object.volume + coal_click_power)"> 石炭集め </button><br><br>
-								<button class="btn btn-secondary" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar">{{coal_object.miner.cost}} </button><br><br>
-								<button class="btn btn-secondary" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar">{{coal_object.machine.cost}}</button><br><br>
+								<button class="btn btn-secondary" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar">{{coal_object.miner.cost | numberDelimiter}} </button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar">{{coal_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1)" v-bind:disabled="money < coal_object.cap_cost"> サイロ購入 <span class="oi oi-dollar">{{coal_object.cap_cost}} </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1, 10)" v-bind:disabled="money < coal_object.cap_cost*10"> 10 </button>
@@ -83,7 +83,7 @@
 							</div>
 							<div class="card-body">
 								<button class="btn btn-secondary" v-on:click="energy_object.volume += energy_object.volume < energy_object.volume_max ? 1 : 0; coal_object.volume-=10" v-bind:disabled="coal_object.volume < 10 || energy_object.volume == energy_object.volume_max"> ppsk </button><br><br>
-								<button class="btn btn-secondary" v-on:click="buy_machine(2)" v-bind:disabled="money < energy_object.machine.cost"> 発電機購入 <span class="oi oi-dollar">{{energy_object.machine.cost}}</button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_machine(2)" v-bind:disabled="money < energy_object.machine.cost"> 発電機購入 <span class="oi oi-dollar">{{energy_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(2)" v-bind:disabled="money < energy_object.cap_cost"> 蓄電器購入 <span class="oi oi-dollar">{{energy_object.cap_cost}} </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(2, 10)" v-bind:disabled="money < energy_object.cap_cost*10"> 10 </button>
@@ -102,7 +102,12 @@
 								<i class="fas fa-cubes"></i> 工場
 							</div>
 							<div class="card-body">
-								<button class="btn btn-secondary" v-on:click="buy_machine(3)" v-bind:disabled="money < factory_object.machine.cost"> 工場を購入 </button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_machine(3)" v-bind:disabled="money < factory_object.machine.cost"> 工場を購入 <span class="oi oi-dollar">{{factory_object.machine.cost | numberDelimiter}}</button><br><br>
+								<div class="btn-group" role="group" aria-label="Basic example">
+									<button class="btn btn-secondary" v-on:click="buy_volume_max(3)" v-bind:disabled="money < factory_object.cap_cost"> 倉庫購入 <span class="oi oi-dollar">{{factory_object.cap_cost}} </button>
+									<button class="btn btn-secondary" v-on:click="buy_volume_max(3, 10)" v-bind:disabled="money < factory_object.cap_cost*10"> 10 </button>
+									<button class="btn btn-secondary" v-on:click="buy_volume_max(3, 100)" v-bind:disabled="money < factory_object.cap_cost*100"> 100 </button>
+								</div><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
 									<button class="btn btn-secondary" v-on:click="sell(3)" v-bind:disabled="factory_object.volume == 0"> 製品を売る </button>
 									<button class="btn btn-secondary" v-on:click="sell(3, 2)" v-bind:disabled="factory_object.volume == 0">100%</button>
@@ -121,19 +126,22 @@
 							</div>
 							<div class="card-body">
 								炭鉱夫({{coal_object.miner.count}}): <span class="blue">+ {{coal_object.miner.count}} click power</span><br>
-								採掘機({{coal_object.machine.count}})： <span class="blue">+ {{coal_object.machine.count}} [<span class="oi oi-fire"></span>]</span><br>
+								採掘機({{coal_object.machine.count}})： <span class="blue">+ {{coal_object.machine.count}} <span class="oi oi-fire"></span></span>, <span class="oi oi-reload"></span> {{coal_object.machine.speed}}[ms]<br>
 								<div v-show="energy_object.researched">
-								発電機({{energy_object.machine.count}})： <span class="blue">+ {{energy_object.machine.count}} [<span class="oi oi-bolt"></span>]</span>, 
-									   <span class="red">- {{energy_machine_use_coal}} [<span class="oi oi-fire"></span>]</span><br>
+								発電機({{energy_object.machine.count}})： <span class="blue">+ {{energy_object.machine.count}} <span class="oi oi-bolt"></span></span>, 
+									   <span class="red">- {{energy_machine_use_coal}} <span class="oi oi-fire"></span></span>, <span class="oi oi-reload"></span> {{energy_object.machine.speed}}[ms]<br>
 								</div>
 								<div v-show="factory_object.researched">
-								工場({{factory_object.machine.count}}): <span class="blue">+ {{factory_object.machine.out_product * factory_object.machine.count}} [<i class="fas fa-cubes"></i>]</span>, 
-									   <span class="red">- {{factory_object.machine.count*100}} [<span class="oi oi-bolt"></span>]</span><br>
+								工場({{factory_object.machine.count}}): <span class="blue">+ {{factory_object.machine.out_product * factory_object.machine.count}} <i class="fas fa-cubes"></i></span>, 
+									   <span class="red">- {{factory_object.machine.count*100}} <span class="oi oi-bolt"></span></span>, <span class="oi oi-reload"></span> {{factory_object.machine.speed}}[ms]<br>
 								</div>
+								<br><br>
+								<p class="text-muted" style="margin-bottom:0rem">*1000[ms] = 1秒</p>
 							</div>
 						</div>
 					</div>
 				</div>
+				<br><br>
 			</div>
 			
 
@@ -177,8 +185,8 @@
 				<h4><span class="oi oi-dollar"></span> {{money | numberDelimiter}} </h4><br>
 
 				LEVEL{{battle.enemy_level}}  HP {{battle.health}} / {{battle.health_max}} ( {{health_volume_rate}}% )
-				<div class="progress kj-progress-bar">
-					<div class="progress-bar bg-danger" role="progressbar" :style="{width: health_volume_rate+'%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+				<div class="progress kj-progress-bar-health">
+					<div class="progress-bar" role="progressbar" :style="{width: health_volume_rate+'%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 				</div>
 				<br>
 				<div class="row">

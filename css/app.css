@@ -11,6 +11,15 @@
     background-color: #111111;
 }
 
+.kj-progress-bar-health {
+	height: 2rem;
+	font-size: 1rem;
+}
+
+.kj-progress-bar-health .progress-bar{
+    background-color: #ee4444;
+}
+
 .bg-dark-2 {
 	background-color: #505050!important;
 }
