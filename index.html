@@ -61,8 +61,8 @@
 								<span class="oi oi-fire"></span> 石炭
 							</div>
 							<div class="card-body">
-								<button class="btn btn-secondary" v-on:click="coal_object.volume = (coal_object.volume+coal_click_power > coal_object.volume_max) ? coal_object.volume_max : (coal_object.volume + coal_click_power)"> 石炭集め </button><br><br>
-								<button class="btn btn-secondary" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar">{{coal_object.miner.cost | numberDelimiter}} </button><br><br>
+								<button class="btn btn-secondary se-pickel" v-on:click="coal_object.volume = (coal_object.volume+coal_click_power > coal_object.volume_max) ? coal_object.volume_max : (coal_object.volume + coal_click_power)"> 石炭集め </button><br><br>
+								<button class="btn btn-secondary se-hajime" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar">{{coal_object.miner.cost | numberDelimiter}} </button><br><br>
 								<button class="btn btn-secondary" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar">{{coal_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1)" v-bind:disabled="money < coal_object.cap_cost"> サイロ購入 <span class="oi oi-dollar">{{coal_object.cap_cost}} </button>
@@ -70,8 +70,8 @@
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1, 100)" v-bind:disabled="money < coal_object.cap_cost*100"> 100 </button>
 								</div><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary" v-on:click="sell(1)" v-bind:disabled="coal_object.volume == 0"> 石炭を売る </button>
-									<button class="btn btn-secondary" v-on:click="sell(1, 2)" v-bind:disabled="coal_object.volume == 0">100%</button>
+									<button class="btn btn-secondary se-cash-1" v-on:click="sell(1)" v-bind:disabled="coal_object.volume == 0"> 石炭を売る </button>
+									<button class="btn btn-secondary se-cash-3" v-on:click="sell(1, 2)" v-bind:disabled="coal_object.volume == 0">100%</button>
 								</div>
 							</div>
 						</div>
@@ -90,8 +90,8 @@
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(2, 100)" v-bind:disabled="money < energy_object.cap_cost*100"> 100 </button>
 								</div><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary" v-on:click="sell(2)" v-bind:disabled="energy_object.volume == 0"> 電気を売る </button>
-									<button class="btn btn-secondary" v-on:click="sell(2, 2)" v-bind:disabled="energy_object.volume == 0">100%</button>
+									<button class="btn btn-secondary se-cash-1" v-on:click="sell(2)" v-bind:disabled="energy_object.volume == 0"> 電気を売る </button>
+									<button class="btn btn-secondary se-cash-3" v-on:click="sell(2, 2)" v-bind:disabled="energy_object.volume == 0">100%</button>
 								</div>
 							</div>
 						</div>
@@ -109,8 +109,8 @@
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(3, 100)" v-bind:disabled="money < factory_object.cap_cost*100"> 100 </button>
 								</div><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary" v-on:click="sell(3)" v-bind:disabled="factory_object.volume == 0"> 製品を売る </button>
-									<button class="btn btn-secondary" v-on:click="sell(3, 2)" v-bind:disabled="factory_object.volume == 0">100%</button>
+									<button class="btn btn-secondary se-cash-1" v-on:click="sell(3)" v-bind:disabled="factory_object.volume == 0"> 製品を売る </button>
+									<button class="btn btn-secondary se-cash-3" v-on:click="sell(3, 2)" v-bind:disabled="factory_object.volume == 0">100%</button>
 								</div>
 
 							</div>
@@ -217,14 +217,44 @@
 		</div>
 	</div>
 
-	<!--
-	<audio id="game-bgm" src="./sound/jazz.mp3" preload="auto" volume="0.2" autoplay loop></audio>
-	-->
+	
+	<audio id="game-bgm-1" src="./sound/BGM8.mp3" preload="auto" autoplay loop></audio>
+	<audio id="game-bgm-2" src="./sound/BGM9.mp3" preload="auto" loop></audio>
+	<audio id="game-bgm-3" src="./sound/BGM7.mp3" preload="auto" loop></audio>
+	<audio id="se-pickel" src="./sound/pickel2.mp3" preload="auto"></audio>
+	<audio id="se-cash-1" src="./sound/cash_1.mp3" preload="auto"></audio>
+	<audio id="se-cash-2" src="./sound/cash_2.mp3" preload="auto"></audio>
+	<audio id="se-cash-3" src="./sound/cash_3.wav" preload="auto"></audio>
+	<audio id="se-hajime" src="./sound/kj/hajime.mp3" preload="auto"></audio>
+	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 	<script src="./js/app.js"></script>
+
+	<script>
+		(function (window, $) {
+		    'use strict';
+		    $.fn.useSound = function (_event, _id) {
+		        var se = $(_id);
+		        this.on(_event, function(){
+		            se[0].currentTime = 0;
+		            se[0].play();
+		        });
+		        return this;
+		    };
+		})(this, this.jQuery);
+
+		$('.se-pickel').useSound('mousedown touchstart', '#se-pickel');
+		$('.se-cash-1').useSound('mousedown touchstart', '#se-cash-1');
+		$('.se-cash-2').useSound('mousedown touchstart', '#se-cash-2');
+		$('.se-cash-3').useSound('mousedown touchstart', '#se-cash-3');
+		$('.se-hajime').useSound('mousedown touchstart', '#se-hajime');
+
+		var vid = document.getElementById("game-bgm-1");
+		vid.volume = 0.5;
+	</script>
 
 </body>
 

@@ -3,7 +3,7 @@
 var AppClass = new Vue({
     el: '#app',
     data: {
-        money: 50,
+        money: 500,
         coal_object: {
             "volume": 0,
             "volume_max": 500,
@@ -18,8 +18,8 @@ var AppClass = new Vue({
                 "cost": 1000,
                 "count": 0,
                 "power": 1,
-                "speed": 3200,
-                "upgrade_speed_cost": 5000,
+                "speed": 1600,
+                "upgrade_speed_cost": 1000,
                 "interval_id": null,
                 "run_machine_function": null,
             },
@@ -35,12 +35,12 @@ var AppClass = new Vue({
                 "count": 0,
                 "use_coal": 10,
                 "out_energy": 1,
-                "speed": 6400,
-                "upgrade_speed_cost": 25000,
+                "speed": 3200,
+                "upgrade_speed_cost": 5000,
                 "interval_id": null,
                 "run_machine_function": null,
             },
-            "value" : 30,
+            "value" : 100,
         },
         factory_object: {
             "researched":false,
@@ -57,10 +57,10 @@ var AppClass = new Vue({
                 "interval_id": null,
                 "run_machine_function": null,
             },
-            "value": 1000,
+            "value": 50000,
         },
-        "research_energy_cost": 1000,
-        "research_factory_cost": 20000,
+        "research_energy_cost": 10000,
+        "research_factory_cost": 200000,
 
         battle: {
             enemy_level: 1,
@@ -96,9 +96,9 @@ var AppClass = new Vue({
         },
         upgrade_machine_speed: function(index) {
             var object = this.get_object(index)
-            object.machine.speed = Math.ceil(object.machine.speed * 0.8)
+            object.machine.speed = Math.ceil(object.machine.speed * 0.75)
             this.money -= object.machine.upgrade_speed_cost
-            object.machine.upgrade_speed_cost *= 10
+            object.machine.upgrade_speed_cost *= 5
             
             clearInterval(object.machine.interval_id);
 　　          object.machine.interval_id = setInterval(object.machine.run_machine_function, object.machine.speed);
@@ -115,9 +115,23 @@ var AppClass = new Vue({
             if(index == 1) {
                 this.energy_object.researched = true
                 this.money -= this.research_energy_cost
+
+                // bgm 変更
+				$('#game-bgm-1')[0].volume=0.0
+            	var se = $('#game-bgm-2');
+                se[0].currentTime = 0;
+                se[0].play();
+                se[0].volume=0.5
             } else if(index == 2) {
                 this.factory_object.researched = true
                 this.money -= this.research_factory_cost
+
+                // bgm 変更
+				$('#game-bgm-2')[0].volume=0.0
+            	var se = $('#game-bgm-3');
+                se[0].currentTime = 0;
+                se[0].play();
+                se[0].volume=0.5
             }
         },
         get_object: function(index) {
