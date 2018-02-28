@@ -1,35 +1,3 @@
-function fadein(bgm_name2, bgm_volume)
-{
-    var bgm_obj = $(bgm_name2)[0]
-    var vl = bgm_obj.volume;
-    if (vl < bgm_volume)
-    {
-        bgm_obj.volume = Math.ceil((vl+0.1)*10)/10;
-        setTimeout(function(){fadein(bgm_name2, bgm_volume)},200);
-    } else {
-        bgm_obj.volume = bgm_volume
-    }
-}
-
-function fadeout(bgm_name1, bgm_name2, bgm_volume)
-{
-    var bgm_obj = $(bgm_name1)[0]
-    var vl = bgm_obj.volume;
-    if (vl > 0)
-    {
-        bgm_obj.volume = Math.floor((vl-0.1)*10)/10;
-        setTimeout(function(){fadeout(bgm_name1, bgm_name2, bgm_volume)}, 200);
-    } else {
-        bgm_obj.pause()
-        var se = $(bgm_name2)[0]
-        se.volume = 0
-        se.currentTime = 0;
-        se.play();
-        setTimeout(function(){fadein(bgm_name2, bgm_volume)},200);
-    }
-}
-
-
 var AppClass = new Vue({
     el: '#app',
     data: {
