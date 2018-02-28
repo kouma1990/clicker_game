@@ -157,7 +157,7 @@
 					<br><br>
 				</div>
 
-				<div v-show="!energy_object.researched">
+				<div v-show="!energy_object.researched && quest.completed_main_1">
 					<button class="btn btn-info" v-on:click="research(1)" v-bind:disabled="money < research_energy_cost"> 電気を研究 <span class="oi oi-dollar">{{research_energy_cost | numberDelimiter}} </button>
 					<br><br>
 				</div>
@@ -167,7 +167,7 @@
 					<br><br>
 				</div>
 				
-				<div v-show="energy_object.researched && !factory_object.researched">
+				<div v-show="energy_object.researched && !factory_object.researched && quest.completed_main_2">
 				<button class="btn btn-info" v-on:click="research(2)" v-bind:disabled="money < research_factory_cost"> 工場を研究 <span class="oi oi-dollar">{{research_factory_cost | numberDelimiter}} </button>
 				</div>
 
@@ -184,7 +184,13 @@
 				<br>
 				<h4><span class="oi oi-dollar"></span> {{money | numberDelimiter}} </h4><br>
 
-				準備中
+				<div v-show="!energy_object.researched && !quest.completed_main_1">
+					<button class="btn btn-info" v-on:click="complete_quest(1)" v-bind:disabled="coal_object.volume < 1500"> メインクエスト（電気発見） <span class="oi oi-fire">1500 </button>
+					<br><br>
+				</div>
+				<div v-show="energy_object.researched && !quest.completed_main_2">
+					<button class="btn btn-info" v-on:click="complete_quest(2)"> メインクエスト(工場設計図発見) </button>
+				</div>
 			</div>
 
 			<!-- ******************************************************************************************************************************************************************-->

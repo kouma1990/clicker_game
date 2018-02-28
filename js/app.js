@@ -59,6 +59,10 @@ var AppClass = new Vue({
         },
         "research_energy_cost": 10000,
         "research_factory_cost": 200000,
+        quest: {
+            completed_main_1: false,
+            completed_main_2: false,
+        }
     },
     methods: {
         hire: function(index) {
@@ -141,6 +145,14 @@ var AppClass = new Vue({
                 return this.factory_object
             }
         },
+        complete_quest: function(index) {
+            if(index == 1) {
+                this.coal_object.volume -= 1500,
+                this.quest.completed_main_1 = true
+            } else if(index == 2) {
+                this.quest.completed_main_2 = true
+            }
+        }
 
     },
     computed: {
