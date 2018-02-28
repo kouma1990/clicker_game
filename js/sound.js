@@ -15,6 +15,16 @@ $('.se-cash-1').useSound('mousedown touchstart', '#se-cash-1');
 $('.se-cash-2').useSound('mousedown touchstart', '#se-cash-2');
 $('.se-cash-3').useSound('mousedown touchstart', '#se-cash-3');
 $('.se-hajime').useSound('mousedown touchstart', '#se-hajime');
+$('.se-drill').useSound('mousedown touchstart', '#se-drill');
+
+se_ids = [
+    "#se-pickel",
+    "#se-cash-1",
+    "#se-cash-2",
+    "#se-cash-3",
+    "#se-hajime",
+    "#se-drill",
+];
 
 var vid = document.getElementById("game-bgm-1");
 vid.volume = 0.3;
@@ -26,14 +36,6 @@ bgm_volume = 0.3
 
 se_on = true
 se_volume = 0.3
-
-se_ids = [
-    "#se-pickel",
-    "#se-cash-1",
-    "#se-cash-2",
-    "#se-cash-3",
-    "#se-hajime",
-];
 
 setSEVolume()
 

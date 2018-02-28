@@ -63,7 +63,7 @@
 							<div class="card-body">
 								<button class="btn btn-secondary se-pickel" v-on:click="coal_object.volume = (coal_object.volume+coal_click_power > coal_object.volume_max) ? coal_object.volume_max : (coal_object.volume + coal_click_power)"> 石炭を掘る </button><br><br>
 								<button class="btn btn-secondary se-hajime" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar">{{coal_object.miner.cost | numberDelimiter}} </button><br><br>
-								<button class="btn btn-secondary" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar">{{coal_object.machine.cost | numberDelimiter}}</button><br><br>
+								<button class="btn btn-secondary se-drill" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar">{{coal_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1)" v-bind:disabled="money < coal_object.cap_cost"> サイロ購入 <span class="oi oi-dollar">{{coal_object.cap_cost}} </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1, 10)" v-bind:disabled="money < coal_object.cap_cost*10"> 10 </button>
@@ -218,6 +218,7 @@
 	<audio id="se-cash-2" src="./sound/cash_2.mp3" preload="auto"></audio>
 	<audio id="se-cash-3" src="./sound/cash_3.wav" preload="auto"></audio>
 	<audio id="se-hajime" src="./sound/kj/hajime.mp3" preload="auto"></audio>
+	<audio id="se-drill" src="./sound/drill.mp3" preload="auto"></audio>
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
