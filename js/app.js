@@ -59,17 +59,6 @@ var AppClass = new Vue({
         },
         "research_energy_cost": 10000,
         "research_factory_cost": 200000,
-
-        battle: {
-            enemy_level: 1,
-            health_max: 100,
-            health: 100,
-            attack: 0,
-            speed: 500,
-            interval_id: null,
-            run_battle_function: null,
-            cost: 100,
-        }
     },
     methods: {
         hire: function(index) {
@@ -153,11 +142,6 @@ var AppClass = new Vue({
             }
         },
 
-        // 戦闘--------------------
-        buy_weapon: function(index) {
-            this.money -= this.battle.cost
-            this.battle.attack += 1
-        }
     },
     computed: {
         coal_volume_rate: function() {
@@ -174,13 +158,8 @@ var AppClass = new Vue({
         },
         coal_click_power: function () {
             return 1 + this.coal_object.miner.count * this.coal_object.miner.power 
-            /*this.objects.reduce(function(prev, object){
-                return prev + object.power*object.count; 
-            },1);*/
         },
-        health_volume_rate: function() {
-            return  this.battle.health_max == 0 ? 0 : Math.round(this.battle.health / this.battle.health_max * 10000) / 100 
-        },
+
     },
     filters: {
         numberDelimiter: function (value) {
@@ -234,27 +213,6 @@ AppClass.coal_object.machine.interval_id = setInterval(AppClass.coal_object.mach
 AppClass.energy_object.machine.interval_id = setInterval(AppClass.energy_object.machine.run_machine_function, AppClass.energy_object.machine.speed)
 AppClass.factory_object.machine.interval_id = setInterval(AppClass.factory_object.machine.run_machine_function, AppClass.factory_object.machine.speed)
 
-
-// 戦闘の処理
-AppClass.battle.run_battle_function = function () {
-    var battle_object = AppClass.battle
-
-    battle_object.health -= battle_object.attack
-    if(battle_object.health <= 0) {
-        battle_object.enemy_level += 1
-        if(battle_object.enemy_level % 10 == 0) {
-            battle_object.health_max =  Math.round(battle_object.health_max*3.3)
-        } else if(battle_object.enemy_level % 100 == 0) {
-            battle_object.health_max =  Math.round(battle_object.health_max*33.3)
-        } else {
-            battle_object.health_max =  Math.round(battle_object.health_max*1.3)
-        }
-        battle_object.health = battle_object.health_max
-    }
-}
-
-AppClass.battle.interval_id = setInterval(AppClass.battle.run_battle_function, AppClass.battle.speed)
-
 /*
 // enter禁止
 $(function(){
@@ -266,16 +224,4 @@ $(function(){
         }
     });
 });
-*/
-
-// ダブルタップによる拡大を禁止
-/*
-var t = 0;
-document.documentElement.addEventListener('touchend', function (e) {
-    var now = new Date().getTime();
-    if ((now - t) < 350){
-        e.preventDefault();
-    }
-    t = now;
-}, false);
 */
