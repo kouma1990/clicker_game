@@ -2,6 +2,15 @@
   display: none;
 }
 
+@font-face {
+    font-family: 'Hina2ndGrade';
+    src: url('../font/JF-Dot-MPlusS10.ttf') format('truetype');
+}
+body {
+    font-family: 'Hina2ndGrade';
+}
+    
+
 .kj-progress-bar {
 	height: 2rem;
 	font-size: 1rem;
