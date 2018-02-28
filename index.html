@@ -7,7 +7,7 @@
 
     <title>KJ CLICKER 3</title>
 
-    <link rel="shortcut icon" href="{{asset('img/favicon-ver2.ico')}}">
+    <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="./open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -34,20 +34,20 @@
 
 						<span class="oi oi-fire"></span> 石炭 {{coal_object.volume}} / {{coal_object.volume_max}} ( {{coal_volume_rate}}% )
 						<div class="progress kj-progress-bar">
-							<div class="progress-bar progress-bar-striped" role="progressbar" :style="{width: coal_volume_rate+'%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+							<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" :style="{width: coal_volume_rate+'%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
 						<br>
 						<div v-show="energy_object.researched">
 							<span class="oi oi-bolt"></span> 電気 {{energy_object.volume}} / {{energy_object.volume_max}} ( {{energy_volume_rate}}% )
 							<div class="progress kj-progress-bar">
-								<div class="progress-bar progress-bar-striped bg-warning" :style="{width: energy_volume_rate+'%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" :style="{width: energy_volume_rate+'%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</div>
 						<br>
 						<div v-show="factory_object.researched">
 							<i class="fas fa-cubes"></i> 製品 {{factory_object.volume}} / {{factory_object.volume_max}} ( {{factory_volume_rate}}% )
 							<div class="progress kj-progress-bar">
-								<div class="progress-bar progress-bar-striped bg-danger" :style="{width: factory_volume_rate+'%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" :style="{width: factory_volume_rate+'%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</div>
 						<br>
@@ -61,7 +61,7 @@
 								<span class="oi oi-fire"></span> 石炭
 							</div>
 							<div class="card-body">
-								<button class="btn btn-secondary se-pickel" v-on:click="coal_object.volume = (coal_object.volume+coal_click_power > coal_object.volume_max) ? coal_object.volume_max : (coal_object.volume + coal_click_power)"> 石炭集め </button><br><br>
+								<button class="btn btn-secondary se-pickel" v-on:click="coal_object.volume = (coal_object.volume+coal_click_power > coal_object.volume_max) ? coal_object.volume_max : (coal_object.volume + coal_click_power)"> 石炭を掘る </button><br><br>
 								<button class="btn btn-secondary se-hajime" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar">{{coal_object.miner.cost | numberDelimiter}} </button><br><br>
 								<button class="btn btn-secondary" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar">{{coal_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
@@ -70,8 +70,8 @@
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1, 100)" v-bind:disabled="money < coal_object.cap_cost*100"> 100 </button>
 								</div><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary se-cash-1" v-on:click="sell(1)" v-bind:disabled="coal_object.volume == 0"> 石炭を売る </button>
-									<button class="btn btn-secondary se-cash-3" v-on:click="sell(1, 2)" v-bind:disabled="coal_object.volume == 0">100%</button>
+									<button class="btn btn-secondary" v-on:click="sell(1)" v-bind:disabled="coal_object.volume == 0"> 石炭を売る </button>
+									<button class="btn btn-secondary" v-on:click="sell(1, 2)" v-bind:disabled="coal_object.volume == 0">100%</button>
 								</div>
 							</div>
 						</div>
@@ -90,8 +90,8 @@
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(2, 100)" v-bind:disabled="money < energy_object.cap_cost*100"> 100 </button>
 								</div><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary se-cash-1" v-on:click="sell(2)" v-bind:disabled="energy_object.volume == 0"> 電気を売る </button>
-									<button class="btn btn-secondary se-cash-3" v-on:click="sell(2, 2)" v-bind:disabled="energy_object.volume == 0">100%</button>
+									<button class="btn btn-secondary" v-on:click="sell(2)" v-bind:disabled="energy_object.volume == 0"> 電気を売る </button>
+									<button class="btn btn-secondary" v-on:click="sell(2, 2)" v-bind:disabled="energy_object.volume == 0">100%</button>
 								</div>
 							</div>
 						</div>
@@ -109,8 +109,8 @@
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(3, 100)" v-bind:disabled="money < factory_object.cap_cost*100"> 100 </button>
 								</div><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary se-cash-1" v-on:click="sell(3)" v-bind:disabled="factory_object.volume == 0"> 製品を売る </button>
-									<button class="btn btn-secondary se-cash-3" v-on:click="sell(3, 2)" v-bind:disabled="factory_object.volume == 0">100%</button>
+									<button class="btn btn-secondary" v-on:click="sell(3)" v-bind:disabled="factory_object.volume == 0"> 製品を売る </button>
+									<button class="btn btn-secondary" v-on:click="sell(3, 2)" v-bind:disabled="factory_object.volume == 0">100%</button>
 								</div>
 
 							</div>
@@ -212,15 +212,20 @@
 				<br>
 				<h4><span class="oi oi-dollar"></span> {{money | numberDelimiter}} </h4><br>
 
+				<button class="btn btn-secondary flex-lg-last" onClick="turnSound()">BGM ON/OFF</button>
+				<div class="slidecontainer">
+  					<input type="range" min="1" max="100" value="30" class="slider" id="myRange">
+				</div><br>
+
 				<button class="btn btn-info" v-on:click="money += 100000000000000000000000000"> デバッグ用お金+ </button><br>
 			</div>
 		</div>
 	</div>
 
 	
-	<audio id="game-bgm-1" src="./sound/BGM8.mp3" preload="auto" autoplay loop></audio>
-	<audio id="game-bgm-2" src="./sound/BGM9.mp3" preload="auto" loop></audio>
-	<audio id="game-bgm-3" src="./sound/BGM7.mp3" preload="auto" loop></audio>
+	<audio id="game-bgm-1" src="./sound/nv_rsta.mp3" preload="auto" loop></audio>
+	<audio id="game-bgm-2" src="./sound/chip2.mp3" preload="auto" loop></audio>
+	<audio id="game-bgm-3" src="./sound/tom_woxom_-_09_-_you_are_right.mp3" preload="auto" loop></audio>
 	<audio id="se-pickel" src="./sound/pickel2.mp3" preload="auto"></audio>
 	<audio id="se-cash-1" src="./sound/cash_1.mp3" preload="auto"></audio>
 	<audio id="se-cash-2" src="./sound/cash_2.mp3" preload="auto"></audio>
@@ -253,7 +258,33 @@
 		$('.se-hajime').useSound('mousedown touchstart', '#se-hajime');
 
 		var vid = document.getElementById("game-bgm-1");
-		vid.volume = 0.5;
+		vid.volume = 0.3;
+		vid.play();
+
+		bgm_on = true
+		bgm_name = "#game-bgm-1"
+		bgm_volume = 0.3
+		function turnSound() {
+			if(bgm_on) {
+				var se = $(bgm_name);
+				se[0].pause();
+				bgm_on = false
+			} else {
+                var se = $(bgm_name);
+                se[0].currentTime = 0;
+                se[0].volume = bgm_volume;
+                se[0].play();
+				bgm_on=true
+			}
+		}
+
+		var bgm_volume_slider = document.getElementById("myRange");
+		bgm_volume_slider.oninput = function() {
+		    bgm_volume = this.value/100;
+		    var se = $(bgm_name);
+		    se[0].volume = bgm_volume
+		}
+
 	</script>
 
 </body>

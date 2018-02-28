@@ -1,3 +1,33 @@
+function fadein(bgm_name2, bgm_volume)
+{
+    var bgm_obj = $(bgm_name2)[0]
+    var vl = bgm_obj.volume;
+    if (vl < bgm_volume)
+    {
+        bgm_obj.volume = Math.ceil((vl+0.1)*10)/10;
+        setTimeout(function(){fadein(bgm_name2, bgm_volume)},200);
+    } else {
+        bgm_obj.volume = bgm_volume
+    }
+}
+
+function fadeout(bgm_name1, bgm_name2, bgm_volume)
+{
+    var bgm_obj = $(bgm_name1)[0]
+    var vl = bgm_obj.volume;
+    if (vl > 0)
+    {
+        bgm_obj.volume = Math.floor((vl-0.1)*10)/10;
+        setTimeout(function(){fadeout(bgm_name1, bgm_name2, bgm_volume)}, 200);
+    } else {
+        bgm_obj.pause()
+        var se = $(bgm_name2)[0]
+        se.volume = 0
+        se.currentTime = 0;
+        se.play();
+        setTimeout(function(){fadein(bgm_name2, bgm_volume)},200);
+    }
+}
 
 
 var AppClass = new Vue({
@@ -109,7 +139,20 @@ var AppClass = new Vue({
             var sell_amount = mode == 1 ? 1 : Math.ceil(object.volume * sell_rate)
             
             object.volume -= sell_amount
-            this.money += object.value * sell_amount
+            earn_money = object.value * sell_amount
+            this.money += earn_money
+
+            var se = null
+            if(earn_money > 1000) {
+                se = $('#se-cash-3');
+            } else if(earn_money > 100) {
+                se = $('#se-cash-2');
+            } else {
+                se = $('#se-cash-1');
+            }
+            
+            se[0].currentTime = 0;
+            se[0].play();
         },
         research: function(index) {
             if(index == 1) {
@@ -117,21 +160,19 @@ var AppClass = new Vue({
                 this.money -= this.research_energy_cost
 
                 // bgm 変更
-				$('#game-bgm-1')[0].volume=0.0
-            	var se = $('#game-bgm-2');
-                se[0].currentTime = 0;
-                se[0].play();
-                se[0].volume=0.5
+                if(bgm_on) {
+                    fadeout("#game-bgm-1", "#game-bgm-2", bgm_volume)
+                }
+                bgm_name = '#game-bgm-2'
             } else if(index == 2) {
                 this.factory_object.researched = true
                 this.money -= this.research_factory_cost
 
                 // bgm 変更
-				$('#game-bgm-2')[0].volume=0.0
-            	var se = $('#game-bgm-3');
-                se[0].currentTime = 0;
-                se[0].play();
-                se[0].volume=0.5
+                if(bgm_on) {
+                    fadeout("#game-bgm-2", "#game-bgm-3", bgm_volume)
+                }
+                bgm_name = '#game-bgm-3'
             }
         },
         get_object: function(index) {
