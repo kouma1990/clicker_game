@@ -196,7 +196,12 @@
 
 				<button class="btn btn-secondary flex-lg-last" onClick="turnSound()">BGM ON/OFF</button>
 				<div class="slidecontainer">
-  					<input type="range" min="1" max="100" value="30" class="slider" id="myRange">
+  					<input type="range" min="1" max="100" value="30" class="slider" id="myRangeBGM">
+				</div><br>
+
+				<button class="btn btn-secondary flex-lg-last" onClick="turnSE()">SE ON/OFF</button>
+				<div class="slidecontainer">
+  					<input type="range" min="1" max="100" value="30" class="slider" id="myRangeSE">
 				</div><br>
 
 				<button class="btn btn-info" v-on:click="money += 100000000000000000000000000"> デバッグ用お金+ </button><br>
