@@ -23,6 +23,8 @@ vid.play();
 bgm_on = true
 bgm_name = "#game-bgm-1"
 bgm_volume = 0.3
+
+// BGM ON/OFF
 function turnSound() {
     if(bgm_on) {
         var se = $(bgm_name);
@@ -44,9 +46,38 @@ bgm_volume_slider.oninput = function() {
     se[0].volume = bgm_volume
 }
 
+// SE ON/OFF
+/*
+function turnSE() {
+    var ids = [
+        "se-pickel",
+        "se-cash-1",
+        "se-cash-2",
+        "se-cash-3",
+        "se-hajime",
+    ];
+
+    for( var i=0; i<classes.length; i++) {
+        var vid = document.getElementById(classes[i]);
+        if(se_on) {
+            vid.volume = 0.0;
+        } else {
+            vid.volume = 1.0;
+        }
+    }
+
+    if(se_on) {
+        se_on = false
+    } else {
+        se_on=true
+    }
+}
+*/
+
 fadein = function (bgm_name2, bgm_volume)
 {
     var bgm_obj = $(bgm_name2)[0]
+    bgm_obj.play();
     var vl = bgm_obj.volume;
     if (vl < bgm_volume)
     {
@@ -68,7 +99,7 @@ fadeout = function(bgm_name1, bgm_name2, bgm_volume)
         var se = $(bgm_name2)[0]
         se.volume = 0
         se.currentTime = 0;
-        se.play();
-        setTimeout(function(){fadein(bgm_name2, bgm_volume)},200);
+        
+        setTimeout(function(){fadein(bgm_name2, bgm_volume)},2000);
     }
 }
