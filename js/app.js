@@ -1,7 +1,7 @@
 var AppClass = new Vue({
     el: '#app',
     data: {
-        money: 500,
+        money: 100,
         coal_object: {
             "volume": 0,
             "volume_max": 100,
