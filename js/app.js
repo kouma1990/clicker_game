@@ -150,6 +150,8 @@ var AppClass = new Vue({
                 this.coal_object.volume -= 1500,
                 this.quest.completed_main_1 = true
             } else if(index == 2) {
+                this.coal_object.volume -= 5000,
+                this.energy_object.volume -= 2000,
                 this.quest.completed_main_2 = true
             }
         }

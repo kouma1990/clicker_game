@@ -189,7 +189,7 @@
 					<br><br>
 				</div>
 				<div v-show="energy_object.researched && !quest.completed_main_2">
-					<button class="btn btn-info" v-on:click="complete_quest(2)"> メインクエスト(工場設計図発見) </button>
+					<button class="btn btn-info" v-on:click="complete_quest(2)" v-bind:disabled="coal_object.volume < 5000 || energy_object.volume < 2000"> メインクエスト(工場設計図発見)  <span class="oi oi-fire">5000  <span class="oi oi-bolt">2000 </button>
 				</div>
 			</div>
 
