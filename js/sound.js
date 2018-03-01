@@ -80,18 +80,6 @@ function turnSE()
     se_on = !se_on
 }
 
-var bgm_volume_slider = document.getElementById("myRangeBGM");
-bgm_volume_slider.oninput = function() {
-    bgm_volume = this.value/100;
-    var se = $(bgm_name)[0];
-    se.volume = bgm_volume
-}
-
-var se_volume_slider = document.getElementById("myRangeSE");
-se_volume_slider.oninput = function() {
-    se_volume = this.value/100;
-    setSEVolume()
-}
 
 fadein = function (bgm_name2, bgm_volume)
 {
