@@ -4,7 +4,7 @@ var AppClass = new Vue({
         money: 500,
         coal_object: {
             "volume": 0,
-            "volume_max": 500,
+            "volume_max": 100,
             "cap_cost": 5,
             "click_power": 1,
             "miner": {
@@ -26,7 +26,7 @@ var AppClass = new Vue({
         energy_object: {
             "researched":false,
             "volume": 0,
-            "volume_max": 200,
+            "volume_max": 100,
             "cap_cost": 15,
             "machine": {
                 "cost": 5000,
