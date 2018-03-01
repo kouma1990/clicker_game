@@ -16,6 +16,7 @@ $('.se-cash-2').useSound('mousedown touchstart', '#se-cash-2');
 $('.se-cash-3').useSound('mousedown touchstart', '#se-cash-3');
 $('.se-hajime').useSound('mousedown touchstart', '#se-hajime');
 $('.se-drill').useSound('mousedown touchstart', '#se-drill');
+$('.se-quest-complete').useSound('mousedown touchstart', '#se-quest-complete');
 
 se_ids = [
     "#se-pickel",
@@ -24,6 +25,7 @@ se_ids = [
     "#se-cash-3",
     "#se-hajime",
     "#se-drill",
+    "#quest-complete",
 ];
 
 var vid = document.getElementById("game-bgm-1");

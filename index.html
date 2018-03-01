@@ -62,10 +62,10 @@
 							</div>
 							<div class="card-body">
 								<button class="btn btn-secondary se-pickel" v-on:click="coal_object.volume = (coal_object.volume+coal_click_power > coal_object.volume_max) ? coal_object.volume_max : (coal_object.volume + coal_click_power)"> 石炭を掘る </button><br><br>
-								<button class="btn btn-secondary se-hajime" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar">{{coal_object.miner.cost | numberDelimiter}} </button><br><br>
-								<button class="btn btn-secondary se-drill" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar">{{coal_object.machine.cost | numberDelimiter}}</button><br><br>
+								<button class="btn btn-secondary se-hajime" v-on:click="hire(1)" v-bind:disabled="money < coal_object.miner.cost"> 炭鉱夫を雇う <span class="oi oi-dollar"></span>{{coal_object.miner.cost | numberDelimiter}}</button><br><br>
+								<button class="btn btn-secondary se-drill" v-on:click="buy_machine(1)" v-bind:disabled="money < coal_object.machine.cost"> 採掘機購入 <span class="oi oi-dollar"></span>{{coal_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary" v-on:click="buy_volume_max(1)" v-bind:disabled="money < coal_object.cap_cost"> サイロ購入 <span class="oi oi-dollar">{{coal_object.cap_cost}} </button>
+									<button class="btn btn-secondary" v-on:click="buy_volume_max(1)" v-bind:disabled="money < coal_object.cap_cost"> サイロ購入 <span class="oi oi-dollar"></span>{{coal_object.cap_cost}}</button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1, 10)" v-bind:disabled="money < coal_object.cap_cost*10"> 10 </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(1, 100)" v-bind:disabled="money < coal_object.cap_cost*100"> 100 </button>
 								</div><br><br>
@@ -83,9 +83,9 @@
 							</div>
 							<div class="card-body">
 								<button class="btn btn-secondary" v-on:click="energy_object.volume += energy_object.volume < energy_object.volume_max ? 1 : 0; coal_object.volume-=10" v-bind:disabled="coal_object.volume < 10 || energy_object.volume == energy_object.volume_max"> ppsk </button><br><br>
-								<button class="btn btn-secondary" v-on:click="buy_machine(2)" v-bind:disabled="money < energy_object.machine.cost"> 発電機購入 <span class="oi oi-dollar">{{energy_object.machine.cost | numberDelimiter}}</button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_machine(2)" v-bind:disabled="money < energy_object.machine.cost"> 発電機購入 <span class="oi oi-dollar"></span>{{energy_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary" v-on:click="buy_volume_max(2)" v-bind:disabled="money < energy_object.cap_cost"> 蓄電器購入 <span class="oi oi-dollar">{{energy_object.cap_cost}} </button>
+									<button class="btn btn-secondary" v-on:click="buy_volume_max(2)" v-bind:disabled="money < energy_object.cap_cost"> 蓄電器購入 <span class="oi oi-dollar"></span>{{energy_object.cap_cost}} </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(2, 10)" v-bind:disabled="money < energy_object.cap_cost*10"> 10 </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(2, 100)" v-bind:disabled="money < energy_object.cap_cost*100"> 100 </button>
 								</div><br><br>
@@ -102,9 +102,9 @@
 								<i class="fas fa-cubes"></i> 工場
 							</div>
 							<div class="card-body">
-								<button class="btn btn-secondary" v-on:click="buy_machine(3)" v-bind:disabled="money < factory_object.machine.cost"> 工場を購入 <span class="oi oi-dollar">{{factory_object.machine.cost | numberDelimiter}}</button><br><br>
+								<button class="btn btn-secondary" v-on:click="buy_machine(3)" v-bind:disabled="money < factory_object.machine.cost"> 工場を購入 <span class="oi oi-dollar"></span>{{factory_object.machine.cost | numberDelimiter}}</button><br><br>
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button class="btn btn-secondary" v-on:click="buy_volume_max(3)" v-bind:disabled="money < factory_object.cap_cost"> 倉庫購入 <span class="oi oi-dollar">{{factory_object.cap_cost}} </button>
+									<button class="btn btn-secondary" v-on:click="buy_volume_max(3)" v-bind:disabled="money < factory_object.cap_cost"> 倉庫購入 <span class="oi oi-dollar"></span>{{factory_object.cap_cost}} </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(3, 10)" v-bind:disabled="money < factory_object.cap_cost*10"> 10 </button>
 									<button class="btn btn-secondary" v-on:click="buy_volume_max(3, 100)" v-bind:disabled="money < factory_object.cap_cost*100"> 100 </button>
 								</div><br><br>
@@ -153,26 +153,26 @@
 				<h4><span class="oi oi-dollar"></span> {{money | numberDelimiter}} </h4><br>
 
 				<div v-show="coal_object.machine.speed >= 100">
-					<button class="btn btn-info" v-on:click="upgrade_machine_speed(1)" v-bind:disabled="money < coal_object.machine.upgrade_speed_cost"> 採掘機アップグレード <span class="oi oi-dollar">{{coal_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
+					<button class="btn btn-info" v-on:click="upgrade_machine_speed(1)" v-bind:disabled="money < coal_object.machine.upgrade_speed_cost"> 採掘機アップグレード <span class="oi oi-dollar"></span>{{coal_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
 					<br><br>
 				</div>
 
 				<div v-show="!energy_object.researched && quest.completed_main_1">
-					<button class="btn btn-info" v-on:click="research(1)" v-bind:disabled="money < research_energy_cost"> 電気を研究 <span class="oi oi-dollar">{{research_energy_cost | numberDelimiter}} </button>
+					<button class="btn btn-info" v-on:click="research(1)" v-bind:disabled="money < research_energy_cost"> 電気を研究 <span class="oi oi-dollar"></span>{{research_energy_cost | numberDelimiter}} </button>
 					<br><br>
 				</div>
 
 				<div v-show="energy_object.researched && energy_object.machine.speed >= 100">
-					<button class="btn btn-info" v-on:click="upgrade_machine_speed(2)" v-bind:disabled="money < energy_object.machine.upgrade_speed_cost"> 発電機アップグレード <span class="oi oi-dollar">{{energy_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
+					<button class="btn btn-info" v-on:click="upgrade_machine_speed(2)" v-bind:disabled="money < energy_object.machine.upgrade_speed_cost"> 発電機アップグレード <span class="oi oi-dollar"></span>{{energy_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
 					<br><br>
 				</div>
 				
 				<div v-show="energy_object.researched && !factory_object.researched && quest.completed_main_2">
-				<button class="btn btn-info" v-on:click="research(2)" v-bind:disabled="money < research_factory_cost"> 工場を研究 <span class="oi oi-dollar">{{research_factory_cost | numberDelimiter}} </button>
+				<button class="btn btn-info" v-on:click="research(2)" v-bind:disabled="money < research_factory_cost"> 工場を研究 <span class="oi oi-dollar"></span>{{research_factory_cost | numberDelimiter}} </button>
 				</div>
 
 				<div v-show="factory_object.researched && factory_object.machine.speed >= 100">
-					<button class="btn btn-info" v-on:click="upgrade_machine_speed(3)" v-bind:disabled="money < factory_object.machine.upgrade_speed_cost"> 工場アップグレード <span class="oi oi-dollar">{{factory_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
+					<button class="btn btn-info" v-on:click="upgrade_machine_speed(3)" v-bind:disabled="money < factory_object.machine.upgrade_speed_cost"> 工場アップグレード <span class="oi oi-dollar"></span>{{factory_object.machine.upgrade_speed_cost | numberDelimiter}} </button>
 					<br><br>
 				</div>
 			</div>
@@ -185,11 +185,11 @@
 				<h4><span class="oi oi-dollar"></span> {{money | numberDelimiter}} </h4><br>
 
 				<div v-show="!energy_object.researched && !quest.completed_main_1">
-					<button class="btn btn-info" v-on:click="complete_quest(1)" v-bind:disabled="coal_object.volume < 1500"> メインクエスト（電気発見） <span class="oi oi-fire">1500 </button>
+					<button class="btn btn-info se-quest-complete" v-on:click="complete_quest(1)" v-bind:disabled="coal_object.volume < 1500"> メインクエスト（電気発見） <span class="oi oi-fire"></span>1,500 </button>
 					<br><br>
 				</div>
 				<div v-show="energy_object.researched && !quest.completed_main_2">
-					<button class="btn btn-info" v-on:click="complete_quest(2)" v-bind:disabled="coal_object.volume < 5000 || energy_object.volume < 2000"> メインクエスト(工場設計図発見)  <span class="oi oi-fire">5000  <span class="oi oi-bolt">2000 </button>
+					<button class="btn btn-info se-quest-complete" v-on:click="complete_quest(2)" v-bind:disabled="coal_object.volume < 5000 || energy_object.volume < 2000"> メインクエスト(工場設計図発見)  <span class="oi oi-fire"></span>5,000  <span class="oi oi-bolt"></span>2,000 </button>
 				</div>
 			</div>
 
@@ -225,6 +225,7 @@
 	<audio id="se-cash-3" src="./sound/cash_3.wav" preload="auto"></audio>
 	<audio id="se-hajime" src="./sound/kj/hajime.mp3" preload="auto"></audio>
 	<audio id="se-drill" src="./sound/drill.mp3" preload="auto"></audio>
+	<audio id="se-quest-complete" src="./sound/quest_complete.mp3" preload="auto"></audio>
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
