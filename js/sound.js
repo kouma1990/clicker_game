@@ -80,33 +80,3 @@ function turnSE()
     se_on = !se_on
 }
 
-
-fadein = function (bgm_name2, bgm_volume)
-{
-    var bgm_obj = $(bgm_name2)[0]
-    bgm_obj.play();
-    var vl = bgm_obj.volume;
-    if (vl < bgm_volume)
-    {
-        bgm_obj.volume = Math.ceil((vl+0.1)*10)/10 > bgm_volume ? bgm_volume : Math.ceil((vl+0.1)*10)/10 ;
-        setTimeout(function(){fadein(bgm_name2, bgm_volume)},200);
-    }
-}
-
-fadeout = function(bgm_name1, bgm_name2, bgm_volume)
-{
-    var bgm_obj = $(bgm_name1)[0]
-    var vl = bgm_obj.volume;
-    if (vl > 0)
-    {
-        bgm_obj.volume = Math.floor((vl-0.1)*10)/10;
-        setTimeout(function(){fadeout(bgm_name1, bgm_name2, bgm_volume)}, 200);
-    } else {
-        bgm_obj.pause()
-        var se = $(bgm_name2)[0]
-        se.volume = 0
-        se.currentTime = 0;
-        
-        setTimeout(function(){fadein(bgm_name2, bgm_volume)},2000);
-    }
-}
