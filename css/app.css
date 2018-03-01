@@ -9,7 +9,10 @@
 body {
     font-family: 'Hina2ndGrade';
 }
-    
+
+#app {
+    margin-top: 24px;
+}
 
 .kj-progress-bar {
 	height: 2rem;
