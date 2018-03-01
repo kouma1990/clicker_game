@@ -25,7 +25,7 @@ se_ids = [
     "#se-cash-3",
     "#se-hajime",
     "#se-drill",
-    "#quest-complete",
+    "#se-quest-complete",
 ];
 
 var vid = document.getElementById("game-bgm-1");
@@ -43,8 +43,8 @@ setSEVolume()
 
 function setSEVolume() {
     for( var i=0; i<se_ids.length; i++) {
-        var vid = $(se_ids[i])[0];
-        vid.volume = se_volume
+        var se = $(se_ids[i]);
+        se[0].volume = se_volume
     }
 }
 
@@ -78,5 +78,48 @@ function turnSE()
     }
 
     se_on = !se_on
+}	
+
+
+var bgm_volume_slider = document.getElementById("myRangeBGM");
+bgm_volume_slider.oninput = function() {
+    bgm_volume = this.value/100;
+    var se = $(bgm_name)[0];
+    se.volume = bgm_volume
 }
 
+var se_volume_slider = document.getElementById("myRangeSE");
+se_volume_slider.oninput = function() {
+    se_volume = this.value/100;
+    setSEVolume()
+}
+
+fadein = function (bgm_name2, bgm_volume)
+{
+    var bgm_obj = $(bgm_name2)[0]
+    bgm_obj.play();
+    var vl = bgm_obj.volume;
+    if (vl < bgm_volume)
+    {
+        bgm_obj.volume = Math.ceil((vl+0.1)*10)/10 > bgm_volume ? bgm_volume : Math.ceil((vl+0.1)*10)/10 ;
+        setTimeout(function(){fadein(bgm_name2, bgm_volume)},200);
+    }
+}
+
+fadeout = function(bgm_name1, bgm_name2, bgm_volume)
+{
+    var bgm_obj = $(bgm_name1)[0]
+    var vl = bgm_obj.volume;
+    if (vl > 0)
+    {
+        bgm_obj.volume = Math.floor((vl-0.1)*10)/10 < 0 ? 0 : Math.floor((vl-0.1)*10)/10;
+        setTimeout(function(){fadeout(bgm_name1, bgm_name2, bgm_volume)}, 200);
+    } else {
+        bgm_obj.pause()
+        var se = $(bgm_name2)[0]
+        se.volume = 0
+        se.currentTime = 0;
+        
+        setTimeout(function(){fadein(bgm_name2, bgm_volume)},2000);
+    }
+}
