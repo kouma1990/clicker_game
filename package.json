@@ -1,0 +1,20 @@
+{
+  "name": "clicker_game",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack -w"
+  },
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue-class-component": "^6.2.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^4.0.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^2.0.10"
+  },
+  "private": true
+}
